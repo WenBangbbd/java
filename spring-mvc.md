@@ -30,12 +30,20 @@
    3. 返回带前缀，forward(默认)，redirect重定向
 ### 方法
 1. 可以传入Model,ViewModel
-2. 可以传出 String->(匹配视图),ViewModel
+2. 可以传出 String->(匹配视图),ViewModel，未绑定模型，可能是web.xml配置错误
 3. 可以传入HttpServletRequest HttpServletResponse
 4. 可以传出 String->(显示字符串 @ResponseBody),json 也是String
-5. 可以传出任意对象，输出json,配置handleadapter(RequestMappingHandlerAdapter.messageConverters.MappingJackson2HttpMessageConverter) @ResponseBody
+5. 可以传出任意对象，输出json
+   1. 配置handleadapter(RequestMappingHandlerAdapter.messageConverters.MappingJackson2HttpMessageConverter) @ResponseBody
+   2. 配置<mvc:annotation-driven /> 可替代上面
+#### 数据映射
+1. 映射get的请求的参数  action(params) action(input) action(String [] strs)<->(?strs=12&strs=24)
+2. 映射post,请求体中的参数   在参数前注解 @RequestBody
 ### 注解
 @RequestMapping，uri<=>controller.action，映射地址和方法对应
    value就是地址
    method 指定请求方式
    params，参数限定条件
+
+### 过滤器
+1. 编码问题，可以配置过滤器
