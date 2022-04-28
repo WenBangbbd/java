@@ -43,4 +43,12 @@
 2. 注解@RunWith(SpringJUnit4ClassRunner.class),运行时
 3. 注解配置@ContextConfiguration(classes = {ApplicationCfg.class})和@ContextConfiguration("classpath:application.xml")
 4. 引入@Autowired
-5. 
+#### 原理
+##### ioc容器
+1. Beanfactory，只管进行依赖注入服务和对象创建管理
+   1. 默认实现，StaticFactory DefaultListableBeanFactory，不能实现自动注入，必须要手动设置
+   2. xml读取，XmlBeanDefinitionReader可以实现从xml中加载配置，可以注解，然后还是从xml中导入配置，
+      1. 默认是不自动装配的，获取bean后，@Autowired注解不会生效，但是使用<bean>配置会生效
+      2. 是因为xml配置中的beans default-autowire=no(默认)，所以要修改
+2. ApplicaitonContext，的功能要大于Beanfactory，要管理bean的生命周期
+   1. 默认实现，FileSystemXmlApplicationContext，读取xml配置文件

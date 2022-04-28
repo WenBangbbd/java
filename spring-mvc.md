@@ -31,7 +31,7 @@
 ### 方法
 1. 可以传入Model,ViewModel
 2. 可以传出 String->(匹配视图),ViewModel，未绑定模型，可能是web.xml配置错误
-3. 可以传入HttpServletRequest HttpServletResponse
+3. 可以传入HttpServletRequest HttpServletResponse，httpsession
 4. 可以传出 String->(显示字符串 @ResponseBody),json 也是String
 5. 可以传出任意对象，输出json
    1. 配置handleadapter(RequestMappingHandlerAdapter.messageConverters.MappingJackson2HttpMessageConverter) @ResponseBody
@@ -39,6 +39,14 @@
 #### 数据映射
 1. 映射get的请求的参数  action(params) action(input) action(String [] strs)<->(?strs=12&strs=24)
 2. 映射post,请求体中的参数   在参数前注解 @RequestBody
+3. @RequestParams，在参数前自定义映射，name表示输入名称，required，default
+4. 自定义类型转换
+   1. 实现Converter<S,T>
+   2. 在配置文件中注册转换器工厂类，ConversionServiceFactory.converters.add(converter)
+   3. 将工厂类注入到框架中，<mvc:annotation-driven conversion-service='converter'>
+5. restful,/qui/{name} @PathVariable注解到参数前，
+6. head,@RequestHeader,name requied
+7. Cook,@CookValue, value
 ### 注解
 @RequestMapping，uri<=>controller.action，映射地址和方法对应
    value就是地址
@@ -47,3 +55,14 @@
 
 ### 过滤器
 1. 编码问题，可以配置过滤器
+### 上传文件
+1. 表单项 type='file'
+2. 表单的提交方式 post
+3. 表单enctyp multipart/form-data
+4. postman 上传文件
+   1. ContentType=multipart/form-data;
+   2. Body->form-data->file
+5. 引入 commons-io commons-fileupload 
+6. 配置文件解析器 <class='CommonsMultipartResolver',id='multipartResolver'>,id是固定的
+7. 传入参数CommonsMultipartFile 参数前面 注解RequestParam
+8. 
